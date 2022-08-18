@@ -1,32 +1,30 @@
 local status, bufferline = pcall(require, "bufferline")
 if (not status) then return end
 
-vim.opt.termguicolors = true
-
 bufferline.setup({
-  options = {
-    mode = "buffers",
-    separator_style = "thin",
-    always_show_bufferline = false,
-    show_buffer_close_icons = true,
-    show_buffer_icons = true,
-    show_buffer_default_icon = true,
-    show_close_icon = false,
-    show_tap_indicators = true,
-    color_icons = true,
-    diagnostics = false,
-  },
-  offsets = {
-    {
-        filetype = "NvimTree",
-        text = function()
-          return vim.fn.getcwd()
-        end,
-        highlight = "Directory",
-        text_align = "center",
-        padding = 4
-    }
-  }
+    options = {
+        mode = "buffers",
+        separator_style = "thin",
+        always_show_bufferline = false,
+        show_buffer_close_icons = true,
+        show_buffer_icons = true,
+        show_buffer_default_icon = true,
+        show_close_icon = false,
+        show_tap_indicators = true,
+        color_icons = true,
+        diagnostics = false,
+        offsets = {
+            {
+                filetype = "NvimTree",
+                text = function()
+                    return vim.fn.getcwd()
+                end,
+                highlight = "Directory",
+                text_align = "center",
+                padding = 4
+            }
+        }
+    },
 })
 
 vim.keymap.set("n", "<leader>bc", "<Cmd>BufferLinePickClose<CR>", {})

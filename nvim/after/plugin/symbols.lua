@@ -2,18 +2,18 @@ local status, symbols = pcall(require, "symbols-outline")
 if (not status) then return end
 
 symbols.setup({
-      highlight_hovered_item = true,
-      show_guides = true,
-      auto_preview = false,
-      position = 'right',
-      relative_width = true,
-      width = 25,
-      auto_close = false,
-      show_numbers = true,
-      show_relative_numbers = false,
-      show_symbol_details = true,
-      preview_bg_highlight = 'Pmenu',
-      keymaps = {
+    highlight_hovered_item = true,
+    show_guides = true,
+    auto_preview = false,
+    position = 'right',
+    relative_width = true,
+    width = 25,
+    auto_close = false,
+    show_numbers = true,
+    show_relative_numbers = false,
+    show_symbol_details = true,
+    preview_bg_highlight = 'Pmenu',
+    keymaps = {
         close = {"<Esc>", "q"},
         goto_location = "<Cr>",
         focus_location = "o",
@@ -21,10 +21,10 @@ symbols.setup({
         toggle_preview = "K",
         rename_symbol = "r",
         code_actions = "a",
-      },
-      lsp_blacklist = {},
-      symbol_blacklist = {},
-      symbols = {
+    },
+    lsp_blacklist = {},
+    symbol_blacklist = {},
+    symbols = {
         File = {icon = "", hl = "TSURI"},
         Module = {icon = "", hl = "TSNamespace"},
         Namespace = {icon = "", hl = "TSNamespace"},
@@ -51,7 +51,7 @@ symbols.setup({
         Event = {icon = "🗲", hl = "TSType"},
         Operator = {icon = "+", hl = "TSOperator"},
         TypeParameter = {icon = "𝙏", hl = "TSParameter"}}
-})
+    })
 
-local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<leader>so", "<Cmd>SymbolsOutline<CR>", opts)
+    local opts = { noremap = true, silent = true }
+    vim.keymap.set("n", "<leader>so", "<Cmd>SymbolsOutline<CR>", opts)
