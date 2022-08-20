@@ -23,6 +23,7 @@ keymap.set("n", "<C-=>", "gg=G<Cr>")
 --*********** buffer **********--
 -- a new buffer
 keymap.set("n", "<leader>new", ":new<cr>")
+
 -- close the current buffer and move to the previous one
 keymap.set("n", "<leader>bq", ":bp <bar> bd #<cr>")
 
@@ -47,5 +48,5 @@ keymap.set("n", "<leader><Down>", ":resize -5<CR>")
 -- go into normal mode by pressing jk instead of escape key 
 keymap.set("i", "jk", "<esc>")
 
--- reload config
-keymap.set("n", "<leader>load", ":so%<CR>")
+-- reload config without closing and reopening nvim
+keymap.set("n", "<leader>so", ":so%<CR>")

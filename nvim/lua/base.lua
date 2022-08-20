@@ -47,7 +47,7 @@ set.expandtab = true		-- expand <Tab> to spaces in Insert mode
 set.clipboard:prepend { "unnamedplus" }  -- to put selected text on the clipboard
 
 
--- vim.g.gruvbox_material_background = 'hard'
+vim.g.gruvbox_material_background = 'medium'
 --***** calling vim script because there are still things that can't be done in Lua *****--
 vim.cmd [[
 syntax enable
@@ -56,7 +56,7 @@ augroup YankHighlight
 autocmd!
 autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 augroup end
-colorscheme tokyonight
+colorscheme nordfox
 ]]
 
 --***** hiding ~ that indicates filler lines *****--
