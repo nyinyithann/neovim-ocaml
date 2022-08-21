@@ -85,6 +85,6 @@ cmp.setup({
             return vim_item
         end,
     }
-})
+}) 
 
 vim.opt.completeopt = { "menuone", "menu", "noselect" }

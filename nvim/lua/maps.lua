@@ -49,4 +49,4 @@ keymap.set("n", "<leader><Down>", ":resize -5<CR>")
 keymap.set("i", "jk", "<esc>")
 
 -- reload config without closing and reopening nvim
-keymap.set("n", "<leader>so", ":so%<CR>")
+keymap.set("n", "<C-s><C-o>", ":so%<CR>")

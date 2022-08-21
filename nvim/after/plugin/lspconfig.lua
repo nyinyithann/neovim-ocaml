@@ -12,7 +12,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
     vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
     vim.keymap.set("n", "<space>wl", function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, bufopts)
     vim.keymap.set("n", "<space>td", vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
@@ -35,7 +35,7 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(
-vim.lsp.protocol.make_client_capabilities()
+    vim.lsp.protocol.make_client_capabilities()
 )
 
 lsp.flow.setup {
@@ -79,21 +79,21 @@ vim.diagnostic.config({
 })
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = false,
-    update_in_insert = false,
-    virtual_text = { spacing = 4, prefix = "●" },
-    severity_sort = true,
-})
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+        underline = false,
+        update_in_insert = false,
+        virtual_text = { spacing = 4, prefix = "●" },
+        severity_sort = true,
+    })
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-vim.lsp.handlers.hover,
-{border = "rounded"}
+    vim.lsp.handlers.hover,
+    {border = "rounded"}
 )
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-vim.lsp.handlers.signature_help,
-{border = "rounded"}
+    vim.lsp.handlers.signature_help,
+    {border = "rounded"}
 )
 
 vim.cmd [[ 
