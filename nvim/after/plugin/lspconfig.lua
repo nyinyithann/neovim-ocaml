@@ -2,13 +2,15 @@ local status, lsp = pcall(require, "lspconfig")
 if (not status) then return end
 
 local on_attach = function(client, bufnr)
-    vim.opt.signcolumn = "yes:1"
+    -- enable completion triggered by <C-x><C-o>
+    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+
     local bufopts = { noremap=true, silent=true, buffer=bufnr }
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set("n", "gk", vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
     vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
     vim.keymap.set("n", "<space>wl", function()
@@ -32,21 +34,39 @@ local on_attach = function(client, bufnr)
             callback = function() vim.lsp.buf.formatting_seq_sync() end
         })
     end
+
+    -- code lens 
+    if client.resolved_capabilities.code_lens then
+        local codelens = vim.api.nvim_create_augroup(
+            'LSPCodeLens',
+            { clear = true }
+        )
+        vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave', 'CursorHold' }, {
+            group = codelens,
+            callback = function()
+                vim.lsp.codelens.refresh()
+            end,
+            buffer = bufnr,
+        })
+    end
 end
 
-local capabilities = require("cmp_nvim_lsp").update_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-)
-
-lsp.flow.setup {
-    on_attach = on_attach,
-    capabilities = capabilities
+local c = vim.lsp.protocol.make_client_capabilities()
+c.textDocument.completion.completionItem.snippetSupport = true
+c.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+        'documentation',
+        'detail',
+        'additionalTextEdits',
+    },
 }
+local capabilities = require("cmp_nvim_lsp").update_capabilities(c)
 
-lsp.ocamllsp.setup ({
+lsp.ocamllsp.setup({
     cmd = { "ocamllsp" },
-    on_attach = on_attach,
     filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
+    root_dir = lsp.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
+    on_attach = on_attach,
     capabilities = capabilities
 })
 
@@ -101,4 +121,3 @@ vim.cmd [[
 highlight! link FloatBorder Normal 
 highlight! link NormalFloat Normal 
 ]]
-

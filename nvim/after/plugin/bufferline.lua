@@ -20,16 +20,16 @@ bufferline.setup({
                     return vim.fn.getcwd()
                 end,
                 highlight = "Directory",
-                text_align = "center",
-                padding = 4
+                text_align = "left",
+                padding = 1
             }
         }
     },
 })
 
-vim.keymap.set("n", "<leader>bc", "<Cmd>BufferLinePickClose<CR>", {})
-vim.keymap.set("n", "<leader>bp", "<Cmd>BufferLinePick<CR>", {})
-vim.keymap.set("n", "<leader>bcr", "<Cmd>BufferLineCloseRight<CR>", {})
-vim.keymap.set("n", "<leader>bcl", "<Cmd>BufferLineCloseLeft<CR>", {})
-vim.keymap.set("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", {})
-vim.keymap.set("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", {})
+vim.keymap.set("n", "<space>bc", "<Cmd>BufferLinePickClose<CR>")
+vim.keymap.set("n", "<space>bp", "<Cmd>BufferLinePick<CR>")
+vim.keymap.set("n", "<space>bcr", "<Cmd>BufferLineCloseRight<CR>")
+vim.keymap.set("n", "<space>bcl", "<Cmd>BufferLineCloseLeft<CR>")
+vim.keymap.set("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>")
+vim.keymap.set("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>")

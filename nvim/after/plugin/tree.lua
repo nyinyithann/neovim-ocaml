@@ -29,7 +29,7 @@ tree.setup({
         icons = {
             glyphs = {
                 git = {
-                    unstaged = "﹡"
+                    unstaged = "⊛"
                 }
             }
         }
@@ -37,9 +37,19 @@ tree.setup({
     filters = {
         -- hide .git folder
         custom = { "^\\.git$" }
-    }
+    },
+    diagnostics = {
+        enable = true,
+        show_on_dirs = true,
+        icons = {
+            error = " ",
+            warning = " ",
+            info = " ",
+            hint = " "
+        },
+    },
 })
 
 local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<leader>te", "<Cmd>NvimTreeToggle<CR>", opts)
-vim.keymap.set("n", "<leader>tf", "<Cmd>NvimTreeFocus<CR>", opts)
+vim.keymap.set("n", "<space>te", "<Cmd>NvimTreeToggle<CR>", opts)
+vim.keymap.set("n", "<space>tf", "<Cmd>NvimTreeFocus<CR>", opts)

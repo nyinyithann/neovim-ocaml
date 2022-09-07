@@ -7,7 +7,7 @@ symbols.setup({
     auto_preview = false,
     position = 'right',
     relative_width = true,
-    width = 25,
+    width = 40,
     auto_close = false,
     show_numbers = true,
     show_relative_numbers = false,

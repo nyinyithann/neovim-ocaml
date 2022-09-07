@@ -1,10 +1,42 @@
-local status, packer = pcall(require, "packer")
-if (not status) then
+local fn = vim.fn
+-- Automatically install packer
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+    PACKER_BOOTSTRAP = fn.system({
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "https://github.com/wbthomason/packer.nvim",
+        install_path,
+    })
+    print("Installing packer close and reopen Neovim...")
+    vim.cmd([[packadd packer.nvim]])
+end
+
+-- Autocommand that reloads neovim whenever you save the plugins.lua file
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
+]])
+
+-- Use a protected call so we don"t error out on first use
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
     print("Packer is not installed")
     return
 end
 
-vim.cmd [[packadd packer.nvim]]
+-- Have packer use a popup window
+packer.init({
+    display = {
+        open_fn = function()
+            return require("packer.util").float({ border = "rounded" })
+        end,
+    },
+})
 
 packer.startup(function(use)
     -- packer can manage itself!
@@ -17,20 +49,22 @@ packer.startup(function(use)
     }
 
     -- lsp config
-    use  { "neovim/nvim-lspconfig", tag = "v0.1.3" }
+    use { "neovim/nvim-lspconfig", tag = "v0.1.3" }
 
-    -- nightfox color scheme
-    use "EdenEast/nightfox.nvim"
-    use "sainnhe/gruvbox-material"
-    use "folke/tokyonight.nvim"
+    -- colorscheme
+    use { "catppuccin/nvim", as = "catppuccin" }
 
     -- autocompletion
-    use { "hrsh7th/nvim-cmp", tag = "v0.0.1" }
+    use "hrsh7th/nvim-cmp"
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-buffer"
+    use "saadparwaiz1/cmp_luasnip"
+
+    -- snippet
+    use "L3MON4D3/LuaSnip"
 
     -- symbol
-    use "simrat39/symbols-outline.nvim" 
+    use "simrat39/symbols-outline.nvim"
 
     -- statusbar
     use {
@@ -41,14 +75,6 @@ packer.startup(function(use)
     -- bufferline
     use { "akinsho/nvim-bufferline.lua", tag = "v2.7.0" }
 
-    -- commenting 
-    use {
-        'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup()
-        end
-    }
-
     -- treesitter
     use {
         "nvim-treesitter/nvim-treesitter",
@@ -56,18 +82,14 @@ packer.startup(function(use)
     }
 
     -- terminal
-    use {"akinsho/toggleterm.nvim", tag = "v2.*" }
+    use { "akinsho/toggleterm.nvim", tag = "v2.*" }
 
-    -- telescope
-    --    use {
-    --        "nvim-telescope/telescope.nvim", tag = "0.1.0",
-    --        requires = { {"nvim-lua/plenary.nvim"} }
-    --    }
+    -- indentation guides
+    use "lukas-reineke/indent-blankline.nvim"
 
-
-    -- sorter to improve telescope sorting
-    -- Needs CMake, and the Microsoft C++ Build Tools on Windows
-    -- Needs CMake, make, and GCC or Clang on Linux and MacOS
-    -- use {"nvim-telescope/telescope-fzf-native.nvim", run = "make" }
+    -- Automatically run packer.clean() followed by packer.update() after cloning packer.nvim
+    -- Put this at the end after all plugins
+    if PACKER_BOOTSTRAP then
+        require("packer").sync()
+    end
 end)
-
