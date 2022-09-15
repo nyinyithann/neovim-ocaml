@@ -81,9 +81,6 @@ packer.startup(function(use)
         run = function() require("nvim-treesitter.install").update({ with_sync = true }) end,
     }
 
-    -- terminal
-    use { "akinsho/toggleterm.nvim", tag = "v2.*" }
-
     -- indentation guides
     use "lukas-reineke/indent-blankline.nvim"
 
